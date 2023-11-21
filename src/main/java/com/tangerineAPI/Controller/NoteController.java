@@ -1,5 +1,6 @@
 package com.tangerineAPI.Controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,59 +15,60 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tangerineAPI.Model.User;
-import com.tangerineAPI.Repository.UserRepository;
+import com.tangerineAPI.Model.Note;
+import com.tangerineAPI.Repository.NoteRepository;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("user")
-public class UserController {
+@RequestMapping("note")
+public class NoteController {
     @Autowired
-    UserRepository repository;
+    NoteRepository repository;
 
     @GetMapping
-    public List<User> getUser() {
-        System.out.println("All users");
+    public List<Note> getNote() {
+        System.out.println("All notes");
         return repository.findAll();
     }
 
     @PostMapping
-    public ResponseEntity<User> postUser(@RequestBody @Valid User user) {
-        System.out.println("Signing up user"); 
-        repository.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    public ResponseEntity<Note> postNote(@RequestBody @Valid Note note) {
+        System.out.println("Signing up note"); 
+        note.setDate(LocalDate.now());
+        repository.save(note);
+        return ResponseEntity.status(HttpStatus.CREATED).body(note);
     }
 
     @GetMapping( "{id}" )
-    public ResponseEntity<User> getUserId(@PathVariable Long id) {
-        System.out.println("User with id: " + id);
+    public ResponseEntity<Note> getNoteId(@PathVariable Long id) {
+        System.out.println("Note with id: " + id);
         
-        return ResponseEntity.ok(getUserdById(id));
+        return ResponseEntity.ok(getNotedById(id));
     }
 
     @DeleteMapping( "{id}" )
-    public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
-        System.out.println("Deleting user with id " + id);
+    public ResponseEntity<Object> deleteNote(@PathVariable Long id) {
+        System.out.println("Deleting note with id " + id);
         
-        getUserdById(id);
+        getNotedById(id);
         repository.deleteById(id);
         
         return ResponseEntity.noContent().build();   
     }
 
     @PutMapping( "{id}" )
-    public ResponseEntity<User> putUser(@PathVariable Long id, @RequestBody @Valid User newUser) {
-        System.out.println("Changing user with id " + id);
+    public ResponseEntity<Note> putNote(@PathVariable Long id, @RequestBody @Valid Note newNote) {
+        System.out.println("Changing note with id " + id);
         
-        getUserdById(id);
-        newUser.setId(id);
-        repository.save(newUser);
+        getNotedById(id);
+        newNote.setId(id);
+        repository.save(newNote);
 
-        return ResponseEntity.ok(newUser);
+        return ResponseEntity.ok(newNote);
     }
 
-    private User getUserdById(Long id) {
+    private Note getNotedById(Long id) {
         return repository.findById(id).orElseThrow( () -> {
             return new RuntimeException();
         } );
