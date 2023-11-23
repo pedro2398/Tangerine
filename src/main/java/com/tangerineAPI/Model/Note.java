@@ -1,4 +1,4 @@
-package com.tangerineAPI.Model;
+package com.tangerineAPI.model;
         
 import java.time.LocalDate;
 

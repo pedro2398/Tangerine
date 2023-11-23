@@ -1,4 +1,4 @@
-package com.tangerineAPI.Controller;
+package com.tangerineAPI.controller;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tangerineAPI.Model.User;
-import com.tangerineAPI.Repository.UserRepository;
+import com.tangerineAPI.model.User;
+import com.tangerineAPI.repository.UserRepository;
 
 import jakarta.validation.Valid;
 

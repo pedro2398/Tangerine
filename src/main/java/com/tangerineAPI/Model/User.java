@@ -1,4 +1,4 @@
-package com.tangerineAPI.Model;
+package com.tangerineAPI.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
